@@ -5,9 +5,12 @@
 
 {%- unless words -%}{%- assign words = data.words -%}{%- endunless -%}
 {%- unless fallback_word -%}{%- assign fallback_word = data.fallback_word -%}{%- endunless -%}
+{%- unless tz_offset_seconds -%}{%- assign tz_offset_seconds = data.tz_offset_seconds -%}{%- endunless -%}
 
+{%- comment -%} Local-time offset: device setting first, JSON second, UTC last. {%- endcomment -%}
 {%- assign offset = trmnl.user.utc_offset -%}
-{%- unless offset -%}{%- assign offset = -18000 -%}{%- endunless -%}
+{%- unless offset -%}{%- assign offset = tz_offset_seconds -%}{%- endunless -%}
+{%- unless offset -%}{%- assign offset = 0 -%}{%- endunless -%}
 {%- assign offset = offset | plus: 0 -%}
 {%- assign now_local = "now" | date: "%s" | plus: 0 | plus: offset -%}
 {%- assign today_str = now_local | date: "%Y-%m-%d" -%}

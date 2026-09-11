@@ -65,5 +65,6 @@
       "definition": "Something you did not know was coming.",
       "example": "The trip to Hawaii was a big surprise!"
     }
-  ]
+  ],
+  "tz_offset_seconds": -18000
 }

@@ -79,7 +79,7 @@ Edit `data/facts.txt` (one fact per line, no blank lines), then rebuild:
 jq -R -s --arg trip "2027-08-05" '{
   trip_date: $trip,
   trip_label: "Hawaii",
-  tz_offset_seconds: -14400,
+  tz_offset_seconds: -18000,
   facts: (split("\n") | map(select(length > 0)))
 }' data/facts.txt > data/hawaii.json
 ```
@@ -88,8 +88,9 @@ Keep facts under about 80 characters so they stay large and readable.
 
 ## Timezone
 
-`tz_offset_seconds` in `hawaii.json` is set to **-14400 (US Eastern, daylight
-time)**. Change it if that is wrong.
+`tz_offset_seconds` is set to **-18000 (US Central, daylight time)** in both
+`hawaii.json` and `words.json`. Chicago switches to -21600 in winter; see below
+for why that does not really matter.
 
 This value is only a fallback. If your TRMNL account has a timezone set, the
 templates use `trmnl.user.utc_offset` instead, which handles daylight saving

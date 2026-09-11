@@ -1,7 +1,7 @@
 {
   "trip_date": "2027-08-05",
   "trip_label": "Hawaii",
-  "tz_offset_seconds": -14400,
+  "tz_offset_seconds": -18000,
   "facts": [
     "Hawaii is made of islands. There are 8 big ones!",
     "Hawaii is the only state in America that is all islands.",
