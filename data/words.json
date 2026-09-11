@@ -1,0 +1,69 @@
+{
+  "fallback_word": {
+    "word": "aloha",
+    "definition": "A Hawaiian word that means hello, goodbye, and love all at once.",
+    "example": "We said aloha to everyone when we got off the plane."
+  },
+  "words": [
+    {
+      "date": "2026-09-14",
+      "word": "because",
+      "definition": "The word you use to tell someone the reason why.",
+      "example": "I wore my boots because it was raining."
+    },
+    {
+      "date": "2026-09-15",
+      "word": "friend",
+      "definition": "Someone you like to be with and who is kind to you.",
+      "example": "My friend saved me a seat at lunch."
+    },
+    {
+      "date": "2026-09-16",
+      "word": "together",
+      "definition": "With each other, not apart.",
+      "example": "We put the puzzle together."
+    },
+    {
+      "date": "2026-09-17",
+      "word": "always",
+      "definition": "Every single time, never missing one.",
+      "example": "I always brush my teeth before bed."
+    },
+    {
+      "date": "2026-09-18",
+      "word": "another",
+      "definition": "One more of the same thing.",
+      "example": "Can I have another book to read?"
+    },
+    {
+      "date": "2026-09-21",
+      "word": "thought",
+      "definition": "An idea in your head. It is also the past tense of think.",
+      "example": "I thought the movie was funny."
+    },
+    {
+      "date": "2026-09-22",
+      "word": "every",
+      "definition": "All of them, each and every one.",
+      "example": "Every kid got a sticker."
+    },
+    {
+      "date": "2026-09-23",
+      "word": "little",
+      "definition": "Small in size, not big.",
+      "example": "A little bird landed on the fence."
+    },
+    {
+      "date": "2026-09-24",
+      "word": "beautiful",
+      "definition": "Very pretty and nice to look at.",
+      "example": "The sunset was beautiful."
+    },
+    {
+      "date": "2026-09-25",
+      "word": "surprise",
+      "definition": "Something you did not know was coming.",
+      "example": "The trip to Hawaii was a big surprise!"
+    }
+  ]
+}

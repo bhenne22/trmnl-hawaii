@@ -1,0 +1,51 @@
+{%- comment -%}
+  Word of the Day -- TRMNL private plugin, "full" layout.
+  Data source: data/words.json (polling strategy)
+{%- endcomment -%}
+
+{%- unless words -%}{%- assign words = data.words -%}{%- endunless -%}
+{%- unless fallback_word -%}{%- assign fallback_word = data.fallback_word -%}{%- endunless -%}
+
+{%- assign offset = trmnl.user.utc_offset -%}
+{%- unless offset -%}{%- assign offset = -18000 -%}{%- endunless -%}
+{%- assign offset = offset | plus: 0 -%}
+{%- assign now_local = "now" | date: "%s" | plus: 0 | plus: offset -%}
+{%- assign today_str = now_local | date: "%Y-%m-%d" -%}
+
+{%- comment -%} Prefer today's dated word; otherwise rotate so the screen is never blank. {%- endcomment -%}
+{%- assign todays = words | where: "date", today_str -%}
+{%- if todays.size > 0 -%}
+  {%- assign entry = todays[0] -%}
+{%- else -%}
+  {%- assign word_count = words | size -%}
+  {%- if word_count > 0 -%}
+    {%- assign day_index = now_local | divided_by: 86400 -%}
+    {%- assign word_i = day_index | modulo: word_count -%}
+    {%- assign entry = words[word_i] -%}
+  {%- else -%}
+    {%- assign entry = fallback_word -%}
+  {%- endif -%}
+{%- endif -%}
+
+<div class="view view--full">
+  <div class="layout layout--col layout--center" style="height: 100%; justify-content: center; text-align: center; padding: 0 44px;">
+
+    <div style="font-size: 24px; letter-spacing: 3px; text-transform: uppercase;">Word of the Day</div>
+
+    <div style="font-size: 96px; line-height: 1.05; font-weight: 700; margin: 10px 0 4px;">{{ entry.word }}</div>
+
+    <div style="font-size: 34px; line-height: 1.3; max-width: 680px;">{{ entry.definition }}</div>
+
+    {%- if entry.example -%}
+      <div style="margin-top: 26px; border-top: 3px solid black; padding-top: 16px; max-width: 680px;">
+        <div style="font-size: 30px; line-height: 1.3; font-style: italic;">&ldquo;{{ entry.example }}&rdquo;</div>
+      </div>
+    {%- endif -%}
+
+  </div>
+
+  <div class="title_bar">
+    <span class="title">Word of the Day</span>
+    <span class="instance">{{ now_local | date: "%A, %B %-d" }}</span>
+  </div>
+</div>
