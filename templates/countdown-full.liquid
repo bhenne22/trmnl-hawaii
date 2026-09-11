@@ -1,6 +1,10 @@
 {%- comment -%}
-  Hawaii Countdown -- TRMNL private plugin, "full" layout.
+  Hawaii Countdown -- TRMNL private plugin, "Full" layout.
   Data source: data/hawaii.json (polling strategy)
+
+  NOTE: paste this into the TRMNL editor's *Full* tab. Do NOT wrap it in
+  <div class="screen"> or <div class="view view--full"> -- the editor adds
+  those itself, and nesting a second one makes the view fail to render.
 {%- endcomment -%}
 
 {%- comment -%} Some TRMNL setups nest the payload under "data". Handle both. {%- endcomment -%}
@@ -28,34 +32,32 @@
 {%- assign fact_i = sleeps | modulo: fact_count -%}
 {%- assign fact = facts[fact_i] -%}
 
-<div class="view view--full">
-  <div class="layout layout--col layout--center" style="height: 100%; justify-content: center; text-align: center; padding: 0 40px;">
+<div class="layout" style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; text-align: center; padding: 0 40px;">
 
-    {%- if sleeps > 1 -%}
-      <div style="font-size: 26px; letter-spacing: 2px; text-transform: uppercase;">Sleeps until {{ trip_label }}</div>
-      <div style="font-size: 190px; line-height: 0.95; font-weight: 700;">{{ sleeps }}</div>
-    {%- elsif sleeps == 1 -%}
-      <div style="font-size: 30px; letter-spacing: 2px; text-transform: uppercase;">Just</div>
-      <div style="font-size: 190px; line-height: 0.95; font-weight: 700;">1</div>
-      <div style="font-size: 34px; font-weight: 700;">more sleep!</div>
-    {%- elsif sleeps == 0 -%}
-      <div style="font-size: 84px; line-height: 1.1; font-weight: 700;">TODAY!</div>
-      <div style="font-size: 34px;">We are going to {{ trip_label }}!</div>
-    {%- else -%}
-      {%- assign days_since = 0 | minus: sleeps -%}
-      <div style="font-size: 84px; line-height: 1.1; font-weight: 700;">Aloha!</div>
-      <div style="font-size: 30px;">{{ days_since }} days since {{ trip_label }}</div>
-    {%- endif -%}
+  {%- if sleeps > 1 -%}
+    <div style="font-size: 26px; letter-spacing: 2px; text-transform: uppercase;">Sleeps until {{ trip_label }}</div>
+    <div style="font-size: 190px; line-height: 0.95; font-weight: 700;">{{ sleeps }}</div>
+  {%- elsif sleeps == 1 -%}
+    <div style="font-size: 30px; letter-spacing: 2px; text-transform: uppercase;">Just</div>
+    <div style="font-size: 190px; line-height: 0.95; font-weight: 700;">1</div>
+    <div style="font-size: 34px; font-weight: 700;">more sleep!</div>
+  {%- elsif sleeps == 0 -%}
+    <div style="font-size: 84px; line-height: 1.1; font-weight: 700;">TODAY!</div>
+    <div style="font-size: 34px;">We are going to {{ trip_label }}!</div>
+  {%- else -%}
+    {%- assign days_since = 0 | minus: sleeps -%}
+    <div style="font-size: 84px; line-height: 1.1; font-weight: 700;">Aloha!</div>
+    <div style="font-size: 30px;">{{ days_since }} days since {{ trip_label }}</div>
+  {%- endif -%}
 
-    <div style="margin-top: 34px; border-top: 3px solid black; padding-top: 18px; max-width: 700px;">
-      <div style="font-size: 22px; letter-spacing: 2px; text-transform: uppercase;">Did you know?</div>
-      <div style="font-size: 32px; line-height: 1.3; margin-top: 8px;">{{ fact }}</div>
-    </div>
-
+  <div style="margin-top: 30px; border-top: 3px solid black; padding-top: 16px; max-width: 700px;">
+    <div style="font-size: 22px; letter-spacing: 2px; text-transform: uppercase;">Did you know?</div>
+    <div style="font-size: 32px; line-height: 1.3; margin-top: 8px;">{{ fact }}</div>
   </div>
 
-  <div class="title_bar">
-    <span class="title">{{ trip_label }} Countdown</span>
-    <span class="instance">{{ trip_date | date: "%B %-d, %Y" }}</span>
-  </div>
+</div>
+
+<div class="title_bar">
+  <span class="title">{{ trip_label }} Countdown</span>
+  <span class="instance">{{ trip_date | date: "%B %-d, %Y" }}</span>
 </div>

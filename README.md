@@ -104,7 +104,24 @@ wrong and the count changes an hour early or late, not by a whole day.
   plugin's sample-data panel to see the actual shape.
 - **Layout looks cramped** — the sizes are inline `font-size` values, so just
   change the numbers. They were picked for the 800x480 panel.
-- **Class names** — `view view--full` and `title_bar` come from TRMNL's design
-  system at usetrmnl.com/framework. Everything doing real layout work is an
-  inline style, so the screen still renders correctly even if a class name has
-  changed on their end.
+- **"Full view not available"** — this means the markup did not render. Two
+  causes, in order of likelihood:
+
+  1. **You wrapped the markup in a view div.** The TRMNL editor supplies
+     `<div class="screen">` and `<div class="view view--full">` itself. Your
+     markup must start at `<div class="layout">`, with `<div class="title_bar">`
+     as its sibling. TRMNL's docs say the `view` classes are "specific to public
+     plugin development, *not* to be used within TRMNL editor." Nesting a second
+     one silently fails. The templates here are already correct.
+  2. **The markup went into the wrong tab.** The editor has a separate box per
+     layout (Full / Half Horizontal / Half Vertical / Quadrant). Paste into
+     **Full**, and make sure it saved.
+
+- **Vertical centering looks off** — the layout div uses `height: 100%`. If it
+  does not fill the screen, change it to `height: 400px` (480px panel minus the
+  title bar).
+
+- **Class names** — `layout` and `title_bar` come from TRMNL's design system at
+  trmnl.com/framework. Everything doing real layout work is an inline style
+  (including `display: flex`), so the screen still renders correctly even if a
+  class name changes on their end.
