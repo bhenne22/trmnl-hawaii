@@ -46,12 +46,40 @@ Do this twice, once per plugin:
 
 1. TRMNL dashboard → **Plugins** → **Private Plugin** → **New**.
 2. Strategy: **Polling**. Paste the matching URL from above.
-3. Refresh rate: anything. Once or twice a day is plenty — both screens only
-   change at midnight, and a slow refresh is easier on the battery.
+3. Refresh rate: 15 minutes. It has to be short enough to notice the daily
+   stamp bump (see "Why the daily stamp" below) soon after midnight. A slow
+   refresh here means the countdown sits on yesterday's number all morning.
 4. Open the **Markup / Edit Markup** editor, pick the **Full** layout, and paste
    in the matching `.liquid` file.
 5. Use the live preview to confirm it renders, then **Save**.
 6. Add both plugins to your **Playlist**.
+
+## Why the daily stamp
+
+TRMNL only regenerates a plugin's screen when the polled payload changes. When
+the bytes match the previous poll, the logs say:
+
+```
+Skipping: No change in data
+```
+
+Both payloads here are static JSON, so the screens froze and the countdown only
+moved when something forced an unrelated re-render — which is why it once sat on
+the wrong number until late morning. `"now"` in Liquid is evaluated at render
+time, so a screen that never re-renders never advances.
+
+`.github/workflows/daily-stamp.yml` fixes this by bumping a `generated_on` field
+in both JSON files to the current America/Chicago date. That changes the payload
+exactly once per local day and forces a re-render just after midnight. It runs
+hourly and only commits when the date actually rolls over, so DST needs no
+special handling.
+
+If the countdown ever sticks again, check the workflow's run history first, then
+the plugin logs for `Skipping: No change in data`.
+
+**Do not remove `generated_on` from either JSON file** — the workflow's `sed`
+looks for it, and without it the screens go stale again.
+
 
 ## Adding each week's words
 

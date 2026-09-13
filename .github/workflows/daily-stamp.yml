@@ -1,0 +1,49 @@
+name: Daily stamp
+
+# TRMNL skips regenerating a plugin's screen when the polled payload is
+# byte-identical to last time ("Skipping: No change in data" in the plugin
+# logs). Both payloads here are static, so the screens froze and the
+# countdown only advanced when something forced an unrelated re-render.
+#
+# This bumps "generated_on" to the current America/Chicago date, which makes
+# the payload change exactly once per local day and forces TRMNL to re-render
+# shortly after midnight. Hourly, because GitHub's scheduler is unreliable to
+# the minute and DST shifts the UTC hour of local midnight twice a year.
+
+on:
+  schedule:
+    - cron: '0 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: daily-stamp
+  cancel-in-progress: false
+
+jobs:
+  stamp:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Stamp today's Chicago date into both payloads
+        run: |
+          TODAY=$(TZ=America/Chicago date +%F)
+          for f in data/hawaii.json data/words.json; do
+            sed -i -E "s/\"generated_on\": \"[0-9]{4}-[0-9]{2}-[0-9]{2}\"/\"generated_on\": \"$TODAY\"/" "$f"
+            python3 -c "import json,sys; json.load(open('$f'))"
+            grep -q "\"generated_on\": \"$TODAY\"" "$f"
+          done
+
+      - name: Commit if the date rolled over
+        run: |
+          if git diff --quiet; then
+            echo "already stamped for $(TZ=America/Chicago date +%F)"
+            exit 0
+          fi
+          git config user.name  'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git commit -am "chore: stamp $(TZ=America/Chicago date +%F)"
+          git push
