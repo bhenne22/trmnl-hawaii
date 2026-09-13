@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "trmnl-hawaii": {
+      "type": "http",
+      "url": "https://trmnl.com/mcp?api_key=${TRMNL_HAWAII_MCP_API_KEY}"
+    }
+  }
+}

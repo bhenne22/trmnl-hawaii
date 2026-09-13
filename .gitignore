@@ -1,0 +1,4 @@
+.DS_Store
+.env
+.env.op
+.claude/settings.local.json
